@@ -7,6 +7,15 @@
 --6) gui du lieu trong from : thi k duoc load lai trang, nhan du lieu ngay tren trang do -> url redirect - target
 
 
+Luu y : state luu hanh noi bo trong component day thoi - xem tromg image
+project user : vd05_user_manage
+VD : button them moi va dong lai neu o trong cung component AddUser thi chi can lam state la ok
+truong hop neu nam khac component Vd 2 nut button nam o component searchForm thi phai lam : - su dung props
+	2 component nay phai lien ket thong qua thang cha
+	- SearchForm ket noi voi app.js - component cha
+	- AddUser ket noi voi app.js - component cha
+
+
 
 
 

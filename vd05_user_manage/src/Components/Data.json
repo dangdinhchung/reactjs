@@ -1,0 +1,26 @@
+[
+    {
+        "id" : 1,
+        "name" : "chung",
+        "tel" : "0349978666",
+        "permission" : 1
+    },
+    {
+        "id" : 2,
+        "name" : "quang",
+        "tel" : "0912884478",
+        "permission" : 2
+    },
+    {
+        "id" : 3,
+        "name" : "tung",
+        "tel" : "01286490696",
+        "permission" : 2
+    },
+    {
+        "id" : 4,
+        "name" : "anh",
+        "tel" : "0969603666",
+        "permission" : 2
+    }
+]
