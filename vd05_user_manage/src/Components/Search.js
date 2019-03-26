@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 
 class Search extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tempValue : ""
+        }
+    }
+    
+    isChange = (event) => {
+        //console.log(event.target.value);
+        this.setState({
+            tempValue : event.target.value
+        });
+        //khi tim kiem thi se tim luon khong can an submit cung duoc
+        this.props.dataSearch(this.state.tempValue);
+    }
     hienThiNut = () => {
         if(this.props.hienThiNut === true){
-            return  <div className="btn btn-block btn-warning" onClick={() => this.props.doiTrangThai()}>Đóng lại</div>;
+            return  <div className="btn  btn-warning" onClick={() => this.props.doiTrangThai()}>Đóng lại</div>;
         }else{
-            return  <div className="btn btn-info btn-block" onClick={() => this.props.doiTrangThai()}>Thêm mới</div>;
+            return  <div className="btn btn-info" onClick={() => this.props.doiTrangThai()}>Thêm mới</div>;
         }
     }
     render() {
@@ -13,8 +28,8 @@ class Search extends Component {
             <div className="col-12">
                 <div className="form-group">
                     <div className="btn-group">
-                    <input type="text" className="form-control " placeholder="Nhập từ khóa" aria-describedby="helpId" style={{width: '500px'}} />
-                    <div className="btn btn-info">Tìm</div>
+                    <input type="text" className="form-control" onChange={(event) => this.isChange(event)} placeholder="Nhập từ khóa" aria-describedby="helpId" style={{width: '500px'}} />
+                    <div className="btn btn-info" onClick={(dulieu) => this.props.dataSearch(this.state.tempValue) }>Tìm</div>
                     </div>
                     <br/>
 
@@ -23,6 +38,7 @@ class Search extends Component {
                     <hr/>
                 </div>
             </div>
+            
         );
     }
 }

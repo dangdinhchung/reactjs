@@ -15,6 +15,10 @@ truong hop neu nam khac component Vd 2 nut button nam o component searchForm thi
 	- SearchForm ket noi voi app.js - component cha
 	- AddUser ket noi voi app.js - component cha
 
+luu y : bo muon truyen cho con thong qua props
+	con muon truyen cho bo : tham so cai ham trong props
+- su dung ham map phai co return 
+- foreach : khong co return
 
 
 
