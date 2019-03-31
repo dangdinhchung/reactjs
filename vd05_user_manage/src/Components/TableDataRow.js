@@ -8,6 +8,9 @@ class TableDataRow extends Component {
             return "Member";
         }
     }
+    editFunCLickUser = () => {
+        this.props.editFunClick();
+    }
     render() {
         return (
             <tr>
@@ -19,7 +22,7 @@ class TableDataRow extends Component {
                 </td>
                 <td>
                 <div className="btn-group">
-                    <div className="btn btn-warning sua">
+                    <div className="btn btn-warning sua" onClick={() => this.editFunCLickUser()}>
                     <i className="fa fa-edit">Sửa</i>
                     </div>
                     <div className="btn btn-danger xoa">

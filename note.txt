@@ -5,7 +5,7 @@
 --4) Luu y ; khi gheo giao dien front-end : %PUBLIC_URL%/ -> vao thu muc public
 --5) Tai lieu : https://reacttraining.com/react-router/web/guides/quick-start
 --6) gui du lieu trong from : thi k duoc load lai trang, nhan du lieu ngay tren trang do -> url redirect - target
-
+--7 ) uuid : de id tu tang -> npm install uuid
 
 Luu y : state luu hanh noi bo trong component day thoi - xem tromg image
 project user : vd05_user_manage
