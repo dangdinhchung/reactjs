@@ -6,6 +6,8 @@ import TableData from "./TableData";
 import AddUser from "./AddUser";
 import dulieu from "./Data.json";
 
+const uuidv1 = require('uuid/v1');
+
 //xu ly phan id
 //const uuidvi = require("uuis/v1");
 class App extends Component {
@@ -15,9 +17,20 @@ class App extends Component {
     this.state = {
       hienThiForm: false,
       duLieuUser: dulieu,
-      textSearch: ""
+      textSearch: "",
+      editUserStatus : false,
+      userEditObject : {} // đối tượng
     };
   }
+
+  //xử lý việc click button sửa hiện thị form -> ẩn nút sửa và ngược lại
+  changeStatusEditUser = () => {
+    this.setState({
+      editUserStatus : !this.state.editUserStatus
+    });
+  }
+
+
   //lấy dữ liệu trong form search : từ component con
   getTextSearch = dulieu => {
     this.setState({
@@ -30,7 +43,7 @@ class App extends Component {
   getNewUser = (name, tel, permission) => {
     //đóng goi thanh dối tượng
     var item = {};
-    item.id = "";
+    item.id = uuidv1();
     item.name = name;
     item.tel = tel;
     item.permission = permission;
@@ -40,12 +53,18 @@ class App extends Component {
     this.setState({
       duLieuUser: items
     });
+    //console.log(this.state.duLieuUser);
+    
   };
 
   //sua du lieu : app ket noi voi tabledata ket noi voi tabledatarow
   editUser = (user) => {
     console.log("Ket noi thanh cong");
+    this.setState({
+      userEditObject : user
+    });
     console.log(user);
+
     
   };
 
@@ -71,11 +90,16 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <Search
+               userEditObject = {this.state.userEditObject} //truyền dữ liệu lên form
                 dataSearch={dl => this.getTextSearch(dl)}
                 doiTrangThai={() => this.doiTrangThai()}
                 hienThiNut={this.state.hienThiForm}
+                editUser={this.state.editUserStatus}
+                changeStatusEditUser = {() => this.changeStatusEditUser()}
               />
-              <TableData editFun={(user) => this.editUser(user)} dulieuProps={ketQua} />
+              <TableData
+                changeStatusEditUser = {() => this.changeStatusEditUser()}
+               editFun={(user) => this.editUser(user)} dulieuProps={ketQua} />
               <AddUser
                 add={(name, tel, permission) =>
                   this.getNewUser(name, tel, permission)

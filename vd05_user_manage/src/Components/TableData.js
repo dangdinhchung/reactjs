@@ -5,6 +5,7 @@ class TableData extends Component {
   mappingDataUser = () =>
     this.props.dulieuProps.map((value, key) => (
       <TableDataRow
+       changeStatusEditUser = {() => this.props.changeStatusEditUser()}
         editFunClick={user => this.props.editFun(value)}
         key={key}
         stt={key}

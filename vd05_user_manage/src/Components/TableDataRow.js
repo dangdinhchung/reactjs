@@ -9,7 +9,8 @@ class TableDataRow extends Component {
         }
     }
     editFunCLickUser = () => {
-        this.props.editFunClick();
+        this.props.editFunClick(); //lấy về thông tin người
+        this.props.changeStatusEditUser();
     }
     render() {
         return (
