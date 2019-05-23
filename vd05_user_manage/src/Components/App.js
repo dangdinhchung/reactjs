@@ -16,12 +16,28 @@ class App extends Component {
     super(props);
     this.state = {
       hienThiForm: false,
-      duLieuUser: dulieu,
+      // duLieuUser: dulieu,
+        duLieuUser: [],//storage
       textSearch: "",
       editUserStatus : false,
       userEditObject : {} // đối tượng
     };
   }
+
+  //xu ly viec storage: khi chay ưng dung thì cwm : trước khi render
+  
+  componentWillMount() {
+    //kiem tra
+    if(localStorage.getItem('userData') === null){ //nếu mà storage k có dữ liệu
+      localStorage.setItem('userData',JSON.stringify(dulieu));
+    }else{
+      var temp = JSON.parse(localStorage.getItem('userData'));
+      this.setState({
+        duLieuUser : temp
+      });
+    }
+  }
+  
 
   //xử lý việc click button sửa hiện thị form -> ẩn nút sửa và ngược lại
   changeStatusEditUser = () => {
@@ -54,6 +70,9 @@ class App extends Component {
       duLieuUser: items
     });
     //console.log(this.state.duLieuUser);
+    //storage
+    //sau khi xóa xong
+    localStorage.setItem('userData', JSON.stringify(items));
     
   };
 
@@ -63,17 +82,44 @@ class App extends Component {
     this.setState({
       userEditObject : user
     });
-    console.log(user);
-
-    
+    //console.log(user);
   };
+
+  getEditUser = (info) => {
+    this.state.duLieuUser.forEach((value,key) => {
+     if(value.id === info.id){
+      value.name = info.name;
+      value.tel = info.tel;
+       value.permission = info.permission;
+     }
+      
+    });
+    localStorage.setItem('userData', JSON.stringify(this.state.duLieuUser));
+  }
 
   doiTrangThai = () => {
     this.setState({
       hienThiForm: !this.state.hienThiForm
     });
   };
+
+  //nhan duoc thong tin xoa
+  deleteUser = (idUser) => {
+   //su dung ham filter : loc ra nhung du lieu ma khac voi idUser duoc click
+   var temData = this.state.duLieuUser.filter(item => item.id !== idUser);
+   this.setState({
+     duLieuUser : temData
+   });
+
+   //storage :
+   //sau khi xóa xong
+   localStorage.setItem('userData',JSON.stringify(temData));
+    
+  }
   render() {
+    //demo phan luu,xoa,lay = local storage
+    //localStorage.setItem('userData', JSON.stringify(dulieu)); //bật ctrl shi i lên xem : chuyển từ đối tượng thành json
+    
     //lưu giá trị tìm kiếm vào mảng trung gian
     var ketQua = [];
     this.state.duLieuUser.forEach(item => {
@@ -90,6 +136,7 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <Search
+              getEditUserInfo = {(info) => this.getEditUser(info) }
                userEditObject = {this.state.userEditObject} //truyền dữ liệu lên form
                 dataSearch={dl => this.getTextSearch(dl)}
                 doiTrangThai={() => this.doiTrangThai()}
@@ -98,6 +145,7 @@ class App extends Component {
                 changeStatusEditUser = {() => this.changeStatusEditUser()}
               />
               <TableData
+              deleteUserClick = {(idUser) => this.deleteUser(idUser) }
                 changeStatusEditUser = {() => this.changeStatusEditUser()}
                editFun={(user) => this.editUser(user)} dulieuProps={ketQua} />
               <AddUser
