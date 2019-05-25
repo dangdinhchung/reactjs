@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 
 
 class News extends Component {
-    userEditStatus = () => {
-        /* var dispatch = this.props.dispatch; */
-        //ngắn gọn hơn
-        var {dispatch} = this.props; //được truyền dưới dạng props
-        dispatch({
-            type: "CHANGE_EDIT_STATUS"
-        })
+    //cách 1
+    // userEditStatus = () => {
+    //     /* var dispatch = this.props.dispatch; */
+    //     //ngắn gọn hơn
+    //     var {dispatch} = this.props; //được truyền dưới dạng props
+    //     dispatch({
+    //         type: "CHANGE_EDIT_STATUS"
+    //     })
+    // }
 
-
-    }
     render() {
         return (
             <div>
                 <h1>Hello chung</h1>  
-                <button className="btn" onClick={() => this.userEditStatus()}>
+                <button className="btn" onClick={() => this.props.userEditStatus()}>
                       Click đi
                 </button>
             </div>
@@ -31,4 +31,16 @@ const mapStateToProps = (state, ownProps) => {
         editStatu: state.editStatus
     }
 }
-export default connect(mapStateToProps)(News)
+
+//cách 2:gọi hàm trong store
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        userEditStatus: () => {
+            dispatch({
+            type: "CHANGE_EDIT_STATUS"
+         })
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(News)
