@@ -6,7 +6,7 @@
 --5) Tai lieu : https://reacttraining.com/react-router/web/guides/quick-start
 --6) gui du lieu trong from : thi k duoc load lai trang, nhan du lieu ngay tren trang do -> url redirect - target
 --7 ) uuid : de id tu tang -> npm install uuid
-
+--react thuan : thi phai su dung truyen qua truyen lai
 Luu y : state luu hanh noi bo trong component day thoi - xem tromg image
 project user : vd05_user_manage
 VD : button them moi va dong lai neu o trong cung component AddUser thi chi can lam state la ok
@@ -20,7 +20,11 @@ luu y : bo muon truyen cho con thong qua props
 - su dung ham map phai co return 
 - foreach : khong co return
 
+--uuid : tu dong tang id : giong auto increment : https://www.npmjs.com/package/uuid
+{/* luu y : trong react khác html : ch? c?n d?t trong th? select là nó t? selected */}
 
+---------------------------------
+ redux : framework : store quan ly nen de dang hon
 
 
 

@@ -45,25 +45,35 @@ function App() {
     switch (action.type) { //đặt tên cho action, đặt công việc cho nó rồi cho reducer thực hiện
       case "CHANGE_EDIT_STATUS": // nếu mà tên như này thì thực thi dispatch
           return {...state,editStatus:!state.editStatus}
-        break;
       case "ADD_NEW":
-          return { ...state, num: [...state.num, action.newItem] } //copy num sau đó thêm phần tử mới vào, thuộc tính newItem do mk tự định nghĩa
-        break;
-    
+          return {...state, num: [...state.num, action.newItem] } //copy num sau đó thêm phần tử mới vào, thuộc tính newItem do mk tự định nghĩa
+      case "DELETE":
+        return {...state,num:state.num.filter((value,key) => key !== action.index )} //loc ra những chỉ số mà khác với action.index được truyền vào => xóa, key là index
       default:
-        break;
+        return state;
     }
-    return state;
+   
   }
   var store1 = redux.createStore(reducer1); // quản lý reducer và state nhưng reducer quản lý state nên store chỉ cần quản lý reducer
-  console.log(store1.getState());
+  
+
+  store1.subscribe(() => {
+    console.log(JSON.stringify(store1.getState()));
+  });
+
   store1.dispatch({type:"CHANGE_EDIT_STATUS"}) // thực thi cái action kia
-  console.log(store1.getState());
+  //them
   store1.dispatch({
     type: "ADD_NEW",
     newItem : "Tai Nghe"
   })
-  console.log(store1.getState());
+
+  //xoa
+  store1.dispatch({// chỉ có store mới truy nhập được state
+    type: "DELETE",
+    index : 0 // sẽ xóa đi phần tử thứ 0 : màn hình
+  })
+  
   
   
 
