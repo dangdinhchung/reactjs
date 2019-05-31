@@ -23,4 +23,18 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//get data in postgresql
+router.get('/getdata01', function (req, res, next) {
+  pool.query('SELECT * FROM product_info', (err, res) => {
+   if(err){
+     console.log(err)
+   }else{
+     console.log(res.rows)
+   }
+    pool.end()
+  })
+
+  res.render('index', { title: 'Express' });
+});
+
 module.exports = router;
