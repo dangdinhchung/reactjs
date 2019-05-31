@@ -6,28 +6,54 @@ class NoteForm extends Component {
         super(props);
         this.state = {
             noteTitle : '',
-            noteContent : ''
+            noteContent : '',
+            id : ''
         }
     }
+
+    //edit : xử lý việc nếu mà k sửa thì vãn phải lấy nội dung cũ
+    //bật react trong trình duyet len xem
+    componentWillMount() {
+        if(this.props.editDataItem){
+            this.setState({
+                noteTitle: this.props.editDataItem.noteTitle,
+                noteContent: this.props.editDataItem.noteContent,
+                id: this.props.editDataItem.id
+            });
+        }
+    }
+    
     
 
     isChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        //console.log(name);
-        //console.log(value);
-        
         this.setState({
             [name] : value
         });
     }
 
     addData = (noteTitle,noteContent) => {
-         var item = {};
-        item.noteTitle = noteTitle;
-        item.noteContent = noteContent;
-        //item = JSON.stringify(item);
-        this.props.addDataForStore(item);
+       //check form sua hay them moi
+       //neu co id la sua
+       if(this.state.id){
+           //sua
+           var editObject = {};
+           editObject.id = this.state.id;
+           editObject.noteTitle = this.state.noteTitle;
+           editObject.noteContent = this.state.noteContent;
+           this.props.editDataForStore(editObject);
+           //tat form
+           this.props.changeEditStatus();
+
+       }else{
+           //them
+           var item = {};
+           item.noteTitle = noteTitle;
+           item.noteContent = noteContent;
+           //item = JSON.stringify(item);
+           this.props.addDataForStore(item);
+       }
     }
     render() {
         return (
@@ -38,12 +64,12 @@ class NoteForm extends Component {
                 <form>
                     <div className="form-group">
                         <label htmlFor="noteTitle">Tiêu đề Note</label>
-                        <input type="text" onChange={(event) => this.isChange(event) } className="form-control" name="noteTitle" id="noteTitle" aria-describedby="helpNote" placeholder="Nhập tiêu đề note" />
+                        <input defaultValue={this.props.editDataItem.noteTitle} type="text" onChange={(event) => this.isChange(event) } className="form-control" name="noteTitle" id="noteTitle" aria-describedby="helpNote" placeholder="Nhập tiêu đề note" />
                         <small id="helpNote" className="form-text text-muted">Điền tiêu đề note</small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="noteTitle">Nội dung Note</label>
-                        <textarea onChange={(event) => this.isChange(event) } className="form-control" name="noteContent" id="noteid" cols={30} rows={5} defaultValue={""} />
+                        <textarea defaultValue={this.props.editDataItem.noteContent} onChange={(event) => this.isChange(event) } className="form-control" name="noteContent" id="noteid" cols={30} rows={5}  />
                         <small id="helpNote" className="form-text text-muted">Điền nội dung note</small>
                     </div>
                     <button type="reset" onClick={() => this.addData(this.state.noteTitle,this.state.noteContent)} className="btn btn-primary btn-block">Lưu</button>
@@ -56,7 +82,7 @@ class NoteForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        test: state.testConnect
+        editDataItem: state.editDataItem
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -64,6 +90,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         addDataForStore: (getItem) => {
             dispatch({
                 type: "ADD_DATA", getItem
+            })
+        },
+        editDataForStore: (getItem) => {
+            dispatch({
+                type: "EDIT", getItem
+            })
+        },
+        changeEditStatus: () => {
+            dispatch({
+                type: "CHANGE_EDIT_STATUS"
             })
         }
     }
