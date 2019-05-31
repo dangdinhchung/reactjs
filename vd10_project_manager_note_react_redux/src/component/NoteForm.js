@@ -45,6 +45,8 @@ class NoteForm extends Component {
            this.props.editDataForStore(editObject);
            //tat form
            this.props.changeEditStatus();
+           //hien thi thong bao
+           this.props.alertOn("Sửa thành công!","success");
 
        }else{
            //them
@@ -53,14 +55,21 @@ class NoteForm extends Component {
            item.noteContent = noteContent;
            //item = JSON.stringify(item);
            this.props.addDataForStore(item);
+           //hien thi thong bao
+           this.props.alertOn("Thêm mới thành công!","success");
        }
+    }
+    changeTitle = () => {
+        if(this.props.addStatus){
+            return <h3> Thêm mới</h3>
+        }else{
+            return <h3> Sửa </h3>
+        }
     }
     render() {
         return (
             <div className="col-4">
-                <h3>
-                    Sửa nội dung note
-                </h3>
+               {this.changeTitle()}
                 <form>
                     <div className="form-group">
                         <label htmlFor="noteTitle">Tiêu đề Note</label>
@@ -82,7 +91,8 @@ class NoteForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        editDataItem: state.editDataItem
+        editDataItem: state.editDataItem,
+        addStatus: state.isAdd
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -100,6 +110,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         changeEditStatus: () => {
             dispatch({
                 type: "CHANGE_EDIT_STATUS"
+            })
+        },
+        alertOn: (alertContent,alerType) => {
+            dispatch({
+                type: "ALERT_ON",
+                alertContent, alerType
+            })
+        },
+        alertOff: () => {
+            dispatch({
+                type: "ALERT_OFF"
             })
         }
     }

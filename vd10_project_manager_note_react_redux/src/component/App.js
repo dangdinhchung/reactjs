@@ -4,6 +4,7 @@ import Nav from './Nav';
 import { connect } from 'react-redux';
 import NoteList from './NoteList';
 import NoteForm from './NoteForm';
+import AlertInfo from './AlertInfo';
 
 class App extends Component {
   showFormEdit = () => {
@@ -14,6 +15,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <AlertInfo/>
         <Nav/>
         <div className="container">
           <div className="row">
